@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.apirest.dsbank.entities.Cliente;
+import com.apirest.dsbank.dto.ClienteDTO;
 import com.apirest.dsbank.services.ClienteService;
 
 @RestController
@@ -20,8 +20,8 @@ public class ClienteResource {
 	
 	// Primeiro end point da aplicação
 		@GetMapping // annotation para configurar que este método seja um web service
-		public ResponseEntity<List<Cliente>> findAll() {
-			List<Cliente> list = service.findAll();	
+		public ResponseEntity<List<ClienteDTO>> findAll() {
+			List<ClienteDTO> list = service.findAll();	
 			return ResponseEntity.ok().body(list);
 			
 		
