@@ -1,8 +1,25 @@
 package com.apirest.dsbank.entities;
 
+import java.io.Serializable;
 import java.time.Instant;
 
-public class Cliente {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "tb_cliente")
+public class Cliente implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	private String email;
@@ -56,11 +73,11 @@ public class Cliente {
 		this.cpf = cpf;
 	}
 
-	public Instant getDataDeNascimento() {
+	public Instant getdataDeNascimento() {
 		return dataDeNascimento;
 	}
 
-	public void setDataDeNascimento(Instant dataDeNascimento) {
+	public void setdataDeNascimento(Instant dataDeNascimento) {
 		this.dataDeNascimento = dataDeNascimento;
 	}
 
