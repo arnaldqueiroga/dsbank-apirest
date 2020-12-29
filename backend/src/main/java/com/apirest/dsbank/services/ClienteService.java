@@ -7,12 +7,15 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.apirest.dsbank.dto.ClienteDTO;
 import com.apirest.dsbank.entities.Cliente;
 import com.apirest.dsbank.repositories.ClienteRepository;
+import com.apirest.dsbank.services.exceptions.DatabaseException;
 import com.apirest.dsbank.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -60,14 +63,25 @@ public class ClienteService {
 			entity.setdataDeNascimento(dto.getDataDeNascimento());
 			entity = repository.save(entity);
 			return new ClienteDTO(entity);
-			
-		}	
-		catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException(" Id não encontrado " +  id );
+
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(" Id não encontrado " + id);
+
+		}
+
+	}
+	
+	// Método Delete (Deletar)
+	public void delete(Long id) {
+		try {
+			repository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(" Id não encontrado " + id);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DatabaseException("Integridade de Violação");
 			
 		}
-		
-
 	}
 
 }
