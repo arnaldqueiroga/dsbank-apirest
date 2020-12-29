@@ -13,7 +13,6 @@ import com.apirest.dsbank.entities.Cliente;
 import com.apirest.dsbank.repositories.ClienteRepository;
 import com.apirest.dsbank.services.exceptions.EntityNotFoundException;
 
-
 @Service
 public class ClienteService {
 	
@@ -27,12 +26,29 @@ public class ClienteService {
 		
 	}
 	
+	// Método para busca
 	@Transactional(readOnly = true)
 	public ClienteDTO findById(Long id) {
 		Optional<Cliente> obj = repository.findById(id);
 		Cliente entity = obj.orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
 		return new ClienteDTO(entity);
 	}
+	
+	// Método Insert (inserir)
+	@Transactional
+	public ClienteDTO insert (ClienteDTO dto) {
+		Cliente entity = new Cliente();
+		entity.setNome(dto.getNome());
+		entity.setEmail(dto.getEmail());
+		entity.setCpf(dto.getCpf());
+		entity.setdataDeNascimento(dto.getDataDeNascimento());
+		entity = repository.save(entity);
+		return new ClienteDTO(entity);	
+		
+		
+	}
+	
+	
 	
 	
 
